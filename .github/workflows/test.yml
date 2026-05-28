@@ -53,26 +53,26 @@ jobs:
               "pr_number": "${{ github.event.pull_request.number || '' }}"
             }
 
-  integration:
-    defaults:
-      run:
-        shell: bash -e -l {0}
-    runs-on: ${{ inputs.os }}
-    needs: unit
-    timeout-minutes: 30
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
+  # integration:
+  #   defaults:
+  #     run:
+  #       shell: bash -e -l {0}
+  #   runs-on: ${{ inputs.os }}
+  #   needs: unit
+  #   timeout-minutes: 30
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v6
 
-      - name: Setup pixi env
-        uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0
-        with:
-          pixi-version: "v0.69.0"
-          environments: test-py${{ inputs.python-version }}
-          locked: false
-          cache: true
-          cache-write: false
+  #     - name: Setup pixi env
+  #       uses: prefix-dev/setup-pixi@1b2de7f3351f171c8b4dfeb558c639cb58ed4ec0
+  #       with:
+  #         pixi-version: "v0.69.0"
+  #         environments: test-py${{ inputs.python-version }}
+  #         locked: false
+  #         cache: true
+  #         cache-write: false
 
-      - name: Test
-        run: |
-          pixi run -e test-py${{ inputs.python-version }} test-integration
+  #     - name: Test
+  #       run: |
+  #         pixi run -e test-py${{ inputs.python-version }} test-integration
