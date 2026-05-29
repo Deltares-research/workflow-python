@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 __all__ = ["METHODS"]
 
-__eps__ = {}
+__eps__ = {}  # This is more or less pro forma
 
 
 class MethodEPS:
@@ -19,7 +19,7 @@ class MethodEPS:
     load local methods lazily. Methods are loaded by name or class name.
     """
 
-    group: ClassVar[str] = ""
+    group: ClassVar[str] = "workflowpy"
 
     def __init__(self, eps: Optional[Dict[str, Union[str, EntryPoint]]] = None) -> None:
         """Initialize."""

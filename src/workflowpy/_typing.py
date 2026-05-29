@@ -1,4 +1,5 @@
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple, Union
@@ -109,18 +110,24 @@ class filedirpath(Path):
     ...
 
 
+class outputdirpath(Path):
+    """Subclass Path to indicate Param is used as root for output locations."""
+
+    ...
+
+
+# Python 3.11 compat
+if sys.version_info[0] == 3 and sys.version_info[1] <= 11:
+    setattr(filedirpath, "_flavour", type(Path())._flavour)
+    setattr(outputdirpath, "_flavour", type(Path())._flavour)
+
+
 def filedir_validator(x: Path) -> filedirpath:
     """Promote Path to filedirpath type."""
     return filedirpath(x)
 
 
 FileDirPath = Annotated[Path, AfterValidator(filedir_validator)]
-
-
-class outputdirpath(Path):
-    """Subclass Path to indicate Param is used as root for output locations."""
-
-    ...
 
 
 def outputdirpath_validator(x: Path) -> outputdirpath:
