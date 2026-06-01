@@ -19,15 +19,17 @@ import yaml
 from jinja2 import Environment, PackageLoader
 
 from workflowpy import __version__
+from workflowpy.config import WorkflowConfig
+from workflowpy.method import ExpandMethod, Method, ReduceMethod
+from workflowpy.reference import Ref
+from workflowpy.rule import Rule
+from workflowpy.rules import Rules
 from workflowpy.templates import TEMPLATE_DIR
 from workflowpy.templates.jinja_cwl_rule import JinjaCWLRule, JinjaCWLWorkflow
 from workflowpy.templates.jinja_snake_rule import JinjaSnakeRule
-from workflowpy.workflow.config import WorkflowConfig
-from workflowpy.workflow.method import ExpandMethod, Method, ReduceMethod
-from workflowpy.workflow.reference import Ref
-from workflowpy.workflow.rule import Rule
-from workflowpy.workflow.rules import Rules
-from workflowpy.workflow.wildcards import Wildcards
+from workflowpy.wildcards import Wildcards
+
+__all__ = ["Workflow"]
 
 logger = logging.getLogger(__name__)
 

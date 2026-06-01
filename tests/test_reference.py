@@ -1,10 +1,10 @@
 import re
 
 import pytest
-from conftest import MockExpandMethod
+from helper import MockExpandMethod
 
-from workflowpy.workflow.reference import Ref
-from workflowpy.workflow.workflow import Workflow, WorkflowConfig
+from workflowpy.reference import Ref
+from workflowpy.workflow import Workflow, WorkflowConfig
 
 
 def test_ref_init(workflow):

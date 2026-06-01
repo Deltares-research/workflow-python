@@ -13,12 +13,16 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Any, ClassVar, Dict, Generator, List, Optional, Tuple
 
+from workflowpy.entrypoints import METHODS
+from workflowpy.parameters import Parameters
 from workflowpy.utils.parsers import has_wildcards
-from workflowpy.workflow.entrypoints import METHODS
-from workflowpy.workflow.parameters import Parameters
-from workflowpy.workflow.wildcards import resolve_wildcards
+from workflowpy.wildcards import resolve_wildcards
 
-__all__ = ["Method"]
+__all__ = [
+    "ExpandMethod",
+    "Method",
+    "ReduceMethod",
+]
 
 logger = logging.getLogger(__name__)
 
@@ -436,5 +440,5 @@ class ExpandMethod(Method, ABC):
 class ReduceMethod(Method):
     """Base class for methods that reduce multiple inputs to one output."""
 
-    # NOTE: for now this class merely serves to flag a a reduce method
+    # NOTE: for now this class merely serves to flag a reduce method
     # it may be extended in the future to include specific reduce logic or methods

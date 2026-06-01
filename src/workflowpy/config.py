@@ -5,6 +5,8 @@ from typing import Any, Dict, List, Literal
 
 from pydantic import BaseModel, ConfigDict
 
+__all__ = ["WorkflowConfig"]
+
 
 class WorkflowConfig(BaseModel):
     """Workflow configuration class."""

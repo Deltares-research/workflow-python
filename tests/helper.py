@@ -1,15 +1,14 @@
 from pathlib import Path
 from typing import List, Union
 
-import pytest
 import yaml
 
+from workflowpy import Method, Parameters
 from workflowpy._typing import WildcardPath
-from workflowpy.workflow import Method, Parameters, Workflow
-from workflowpy.workflow.method import ExpandMethod, ReduceMethod
-from workflowpy.workflow.rule import Rule
+from workflowpy.method import ExpandMethod, ReduceMethod
 
 
+# Helper objects
 class TestMethodInput(Parameters):
     """Test method input."""
 
@@ -197,11 +196,7 @@ class MockReduceMethod(ReduceMethod):
             yaml.dump(data, f)
 
 
-@pytest.fixture
-def test_method():
-    return TestMethod(input_file1="test_file1", input_file2="test_file2", param="param")
-
-
+# Helper create functions
 def create_test_method(
     root: Path,
     input_file1="test_file1",
@@ -217,55 +212,3 @@ def create_test_method(
             with open(input_file, "w") as f:
                 f.write("")
     return TestMethod(input_file1=input_file1, input_file2=input_file2, param=param)
-
-
-@pytest.fixture
-def workflow() -> Workflow:
-    config = {"rps": [2, 50, 100]}
-    wildcards = {"region": ["region1", "region2"]}
-    return Workflow(name="wf_instance", config=config, wildcards=wildcards)
-
-
-@pytest.fixture
-def mock_expand_method():
-    return MockExpandMethod(input_file="test.yml", root="", events=["1", "2"])
-
-
-@pytest.fixture
-def rule(test_method, workflow):
-    return Rule(method=test_method, workflow=workflow, rule_id="test_rule")
-
-
-@pytest.fixture
-def w() -> Workflow:
-    config = {"rps": [2, 50, 100]}
-    wildcards = {"region": ["region1", "region2"]}
-    return Workflow(name="wf_instance", config=config, wildcards=wildcards)
-
-
-@pytest.fixture
-def workflow_yaml_dict():
-    return {
-        "config": {
-            "input_file": "tests/_data/region.geojson",
-            "events": ["1", "2", "3"],
-            "root": "root",
-        },
-        "rules": [
-            {
-                "method": "mock_expand_method",
-                "kwargs": {
-                    "input_file": "$config.input_file",
-                    "events": "$config.events",
-                    "root": "$config.root",
-                },
-            },
-            {
-                "method": "mock_reduce_method",
-                "kwargs": {
-                    "files": "$rules.mock_expand_method.output.output_file",
-                    "root": "$config.root",
-                },
-            },
-        ],
-    }

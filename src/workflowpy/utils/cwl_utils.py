@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict
 
-from workflowpy.workflow.wildcards import wildcard_product
+from workflowpy.wildcards import wildcard_product
 
 
 def map_cwl_types(input: Any) -> Dict[str, str]:

@@ -1,12 +1,12 @@
 import pytest
-from conftest import (
+from helper import (
     MockReduceMethod,
     TestMethod,
 )
 
-from workflowpy.workflow.rule import Rule
-from workflowpy.workflow.rules import Rules
-from workflowpy.workflow.workflow import Workflow
+from workflowpy.rule import Rule
+from workflowpy.rules import Rules
+from workflowpy.workflow import Workflow
 
 
 def test_rules(workflow, rule):

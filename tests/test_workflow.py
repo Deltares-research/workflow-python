@@ -7,19 +7,19 @@ from pathlib import Path
 
 import pytest
 import yaml
-from conftest import (
+from helper import (
     MockExpandMethod,
     MockReduceMethod,
     TestMethod,
 )
 
-from workflowpy.workflow import (
+from workflowpy import (
     Rule,
     Workflow,
     WorkflowConfig,
 )
-from workflowpy.workflow.reference import Ref
-from workflowpy.workflow.wildcards import Wildcards
+from workflowpy.reference import Ref
+from workflowpy.wildcards import Wildcards
 
 
 def create_workflow_with_mock_methods(
@@ -83,7 +83,7 @@ def test_workflow_create_rule(workflow: Workflow, tmp_path):
 
 
 def test_workflow_rule_from_kwargs(workflow: Workflow, mocker, mock_expand_method):
-    mocked_Method = mocker.patch("workflowpy.workflow.Method.from_kwargs")
+    mocked_Method = mocker.patch("workflowpy.Method.from_kwargs")
     mocked_Method.return_value = mock_expand_method
     kwargs = {"rps": "$config.rps"}
     workflow.create_rule_from_kwargs(

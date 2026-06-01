@@ -8,6 +8,12 @@ from pydantic import BaseModel
 
 from workflowpy.utils.parsers import get_wildcards
 
+__all__ = [
+    "Wildcards",
+    "resolve_wildcards",
+    "wildcard_product",
+]
+
 logger = getLogger(__name__)
 
 

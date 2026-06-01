@@ -4,9 +4,9 @@ import weakref
 from typing import TYPE_CHECKING, Any, Iterator, Optional
 
 if TYPE_CHECKING:
-    from workflowpy.workflow.config import WorkflowConfig
-    from workflowpy.workflow.parameters import Parameters
-    from workflowpy.workflow.workflow import Workflow
+    from workflowpy.config import WorkflowConfig
+    from workflowpy.parameters import Parameters
+    from workflowpy.workflow import Workflow
 
 
 __all__ = ["Ref"]

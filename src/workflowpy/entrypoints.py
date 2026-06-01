@@ -5,11 +5,13 @@ from typing import TYPE_CHECKING, ClassVar, Dict, Optional, Union
 from importlib_metadata import EntryPoint, entry_points
 
 if TYPE_CHECKING:
-    from workflowpy.workflow import Method
+    from workflowpy import Method
 
 __all__ = ["METHODS"]
 
-__eps__ = {}  # This is more or less pro forma
+__eps__ = {
+    "script_method": "workflowpy.methods.script:ScriptMethod",
+}  # Register our single built-in method
 
 
 class MethodEPS:
@@ -68,7 +70,7 @@ class MethodEPS:
 
     def load(self, name: str) -> "Method":
         """Load method by name."""
-        from workflowpy.workflow import Method
+        from workflowpy import Method
 
         obj = self.get_ep(name).load()
         if not issubclass(obj, Method):

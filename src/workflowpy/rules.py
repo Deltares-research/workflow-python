@@ -9,7 +9,9 @@ This class is responsible for:
 from itertools import chain
 from typing import Iterator
 
-from workflowpy.workflow.rule import Rule
+from workflowpy.rule import Rule
+
+__all__ = ["Rules"]
 
 
 class Rules:

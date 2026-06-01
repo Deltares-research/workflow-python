@@ -10,7 +10,7 @@ from workflowpy.utils.cwl_utils import map_cwl_types, wildcard_inputs_nested
 from workflowpy.utils.parsers import get_wildcards
 
 if TYPE_CHECKING:
-    from workflowpy.workflow.rule import Rule
+    from workflowpy.rule import Rule
 
 
 class JinjaCWLRule:

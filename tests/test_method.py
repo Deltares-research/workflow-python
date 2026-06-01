@@ -3,14 +3,14 @@ import re
 from pathlib import Path
 
 import pytest
-from conftest import (
+from helper import (
     MockDoubleExpandMethod,
     MockExpandMethod,
     TestMethod,
     create_test_method,
 )
 
-from workflowpy.workflow import Method, Parameters
+from workflowpy import Method, Parameters
 
 
 def test_method_param_props(test_method: TestMethod):

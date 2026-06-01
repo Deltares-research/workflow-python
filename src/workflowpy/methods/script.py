@@ -7,8 +7,8 @@ from typing import Any, ClassVar, Dict, Optional
 
 from pydantic import ConfigDict, model_validator
 
-from workflowpy.workflow.method import Method
-from workflowpy.workflow.parameters import Parameters
+from workflowpy.method import Method
+from workflowpy.parameters import Parameters
 
 __all__ = ["ScriptMethod", "ScriptInput", "ScriptOutput", "ScriptParams"]
 
