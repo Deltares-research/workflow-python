@@ -3,12 +3,12 @@
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
+from workflowpy.methods.script import ScriptMethod
 from workflowpy.utils.parsers import get_wildcards
-from workflowpy.workflow.script import ScriptMethod
 
 if TYPE_CHECKING:
-    from workflowpy.workflow.method import Method
-    from workflowpy.workflow.rule import Rule
+    from workflowpy.method import Method
+    from workflowpy.rule import Rule
 
 
 class JinjaSnakeRule:

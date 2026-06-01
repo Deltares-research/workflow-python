@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from workflowpy.workflow.wildcards import Wildcards, resolve_wildcards, wildcard_product
+from workflowpy.wildcards import Wildcards, resolve_wildcards, wildcard_product
 
 
 def test_wildcards(caplog):

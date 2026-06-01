@@ -1,10 +1,11 @@
 """Logging module of workflowpy."""
 
 import logging
-import logging.handlers
 import os
 
 from workflowpy import __version__
+
+__all__ = ["add_filehandler", "setuplog"]
 
 FMT = "%(levelname)s - %(module)s - %(message)s"
 

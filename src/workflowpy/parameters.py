@@ -10,7 +10,9 @@ from pydantic import (
     model_validator,
 )
 
-from workflowpy.workflow.reference import Ref
+from workflowpy.reference import Ref
+
+__all__ = ["Parameters"]
 
 
 class Parameters(BaseModel):

@@ -15,14 +15,14 @@ from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
 
 from tqdm.contrib.concurrent import thread_map
 
+from workflowpy.method import ExpandMethod, Method, ReduceMethod
+from workflowpy.parameters import Parameters
 from workflowpy.utils.parsers import get_wildcards
 from workflowpy.utils.path_utils import cwd
-from workflowpy.workflow.method import ExpandMethod, Method, ReduceMethod
-from workflowpy.workflow.parameters import Parameters
-from workflowpy.workflow.wildcards import resolve_wildcards
+from workflowpy.wildcards import resolve_wildcards
 
 if TYPE_CHECKING:
-    from workflowpy.workflow.workflow import Workflow
+    from workflowpy.workflow import Workflow
 
 __all__ = ["Rule"]
 

@@ -5,16 +5,16 @@ from pathlib import Path
 from weakref import ReferenceType
 
 import pytest
-from conftest import (
+from helper import (
     ExpandMethodOutput,
     MockExpandMethod,
     MockReduceMethod,
     TestMethod,
 )
 
-from workflowpy.workflow import Rule
-from workflowpy.workflow.method import Method
-from workflowpy.workflow.workflow import Workflow
+from workflowpy import Rule
+from workflowpy.method import Method
+from workflowpy.workflow import Workflow
 
 
 def test_rule_init(rule: Rule, workflow: Workflow):

@@ -1,14 +1,14 @@
 import pytest
 from importlib_metadata import EntryPoint
 
-from workflowpy.workflow.entrypoints import MethodEPS
-from workflowpy.workflow.method import Method
+from workflowpy.entrypoints import MethodEPS
+from workflowpy.method import Method
 
 
 def test_method_eps():
     name = "test_method"
     cls_name = "TestMethod"
-    module = "conftest"
+    module = "helper"
     ep_str = f"{module}:{cls_name}"
 
     m = MethodEPS({name: ep_str})

@@ -18,8 +18,9 @@ from typing import Dict, Optional
 import click
 
 from workflowpy import __version__
+from workflowpy.entrypoints import METHODS, MethodEPS
 from workflowpy.log import setuplog
-from workflowpy.workflow.method import Method
+from workflowpy.method import Method
 
 
 # Copied from rasterio.rio.options
@@ -52,16 +53,46 @@ def _cb_key_val(ctx: click.Context, param: str, value: str) -> Dict[str, str]:
         return out
 
 
-def print_license(ctx: click.Context, param: str, value: str) -> Optional[Dict]:
-    """Print the license for workflowpy."""
+def max_col_size(
+    methods: MethodEPS,
+    added_space: int = 2,
+) -> tuple[int, int]:
+    """Determine the column size in a simple manner."""
+    name_size = max([len(item) for item in methods.entry_points.keys()]) + added_space
+    library_size = (
+        max(
+            [len(item.value.split(".", 1)[0]) for item in methods.entry_points.values()]
+        )
+        + added_space
+    )
+    return name_size, library_size
+
+
+def show_methods(ctx: click.Context, param: str, value: str) -> Optional[Dict]:
+    """Show the available (registered) workflowpy methods."""
+    if not value or len(METHODS.entry_points) == 0:
+        return {}  # What even is this?
+    # Get the sizes
+    s1, s2 = max_col_size(METHODS, added_space=4)
+    # Echo the information
+    click.echo("[Name]".ljust(s1) + "[Library]".ljust(s2) + "[Method]")
+    for key, value in sorted(METHODS.entry_points.items()):
+        library = value.value.split(".", 1)[0]
+        click.echo(key.ljust(s1) + library.ljust(s2) + value.value)
+    click.echo()
+    ctx.exit()
+
+
+def show_license(ctx: click.Context, param: str, value: str) -> Optional[Dict]:
+    """Show the license for workflowpy."""
     if not value:
         return {}
     click.echo("MIT License. See https://opensource.org/license/mit")
     ctx.exit()
 
 
-def print_info(ctx: click.Context, param: str, value: str) -> Optional[Dict]:
-    """Print a copyright statement for workflowpy."""
+def show_info(ctx: click.Context, param: str, value: str) -> Optional[Dict]:
+    """Show a copyright statement for workflowpy."""
     if not value:
         return {}
     click.echo("workflowpy, Copyright Deltares")
@@ -82,24 +113,32 @@ overwrite_opt = click.option(
 @click.group()
 @click.version_option(__version__, message="workflowpy version: %(version)s")
 @click.option(
+    "--list",
+    default=False,
+    is_flag=True,
+    is_eager=True,
+    help="Show the available methods.",
+    callback=show_methods,
+)
+@click.option(
     "--license",
     default=False,
     is_flag=True,
     is_eager=True,
-    help="Print license information for workflowpy",
-    callback=print_license,
+    help="Show license information.",
+    callback=show_license,
 )
 @click.option(
     "--info",
     default=False,
     is_flag=True,
     is_eager=True,
-    help="Print information and version of workflowpy",
-    callback=print_info,
+    help="Show information and version.",
+    callback=show_info,
 )
 @click.option("--debug/--no-debug", default=False, envvar="REPO_DEBUG")
 @click.pass_context
-def cli(ctx, info, license, debug):  # , quiet, verbose):
+def cli(ctx, list, info, license, debug):  # , quiet, verbose):
     """Command line interface for workflowpy."""
     if ctx.obj is None:
         ctx.obj = {}
