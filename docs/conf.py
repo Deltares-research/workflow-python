@@ -89,8 +89,8 @@ html_context = {
 }
 
 html_css_files = ["theme.css"]
-# html_favicon = "_static/icon.svg"
-# html_logo = "_static/icon.svg"
+html_favicon = "_static/icon.svg"
+html_logo = "_static/icon.svg"
 html_show_sourcelink = False
 html_static_path = ["_static"]
 html_theme = "pydata_sphinx_theme"
