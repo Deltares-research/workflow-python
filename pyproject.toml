@@ -7,6 +7,9 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 include = ["workflowpy*"]
 
+[tool.setuptools.package-data]
+workflowpy = ["templates/*"]
+
 [tool.setuptools.dynamic]
 version = {attr = "workflowpy.version.__version__"}
 
