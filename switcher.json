@@ -1,0 +1,4 @@
+[
+  {"name":"dev","version":"dev","url":"https://deltares-research.github.io/workflowpy/dev/"},
+  {"name":"stable","version":"0.1.0","url":"https://deltares-research.github.io/workflowpy/stable/"}
+]
