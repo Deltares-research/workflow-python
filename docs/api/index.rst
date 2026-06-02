@@ -24,6 +24,6 @@ This is the API reference of workflowpy.
     :maxdepth: 1
     :hidden:
 
-    core
-    methods
-    utils
+    core.rst
+    methods.rst
+    utils.rst

@@ -19,6 +19,8 @@ Core functionality
 ==================
 These are the core functions & classes of workflowpy.
 
+Workflow
+--------
 
 .. autosummary::
    :toctree: ../_generated
@@ -27,8 +29,26 @@ These are the core functions & classes of workflowpy.
 
    Workflow
    WorkflowConfig
-   Wildcards
+
+Rule
+----
+
+.. autosummary::
+   :toctree: ../_generated
+   :template: autosummary/class_pydantic.rst
+   :nosignatures:
+
    Rule
+   Wildcards
+
+Method
+------
+
+.. autosummary::
+   :toctree: ../_generated
+   :template: autosummary/class_pydantic.rst
+   :nosignatures:
+
    Method
    ExpandMethod
    ReduceMethod

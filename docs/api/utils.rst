@@ -1,4 +1,4 @@
-.. currentmodule:: workflowpy.utils
+.. currentmodule:: workflowpy
 
 .. raw:: html
 
@@ -18,3 +18,12 @@
 Utility
 =======
 These are the utility functions of workflowpy.
+
+Logging
+-------
+
+.. autosummary::
+   :toctree: ../_generated
+
+   log.setuplog
+   log.add_filehandler
