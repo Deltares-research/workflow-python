@@ -27,7 +27,7 @@ maintainers = [
 
 description = ""
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 
 requires-python = ">=3.11"
 dependencies = [
