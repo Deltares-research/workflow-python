@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Download source distribution
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: ${{ inputs.artifact-name }}
           path: dist
@@ -50,7 +50,7 @@ jobs:
   #       uses: actions/checkout@v6
 
   #     - name: Download source distribution
-  #       uses: actions/download-artifact@v7
+  #       uses: actions/download-artifact@v8
   #       with:
   #         name: ${{ inputs.artifact-name }}
   #         path: dist
@@ -83,7 +83,7 @@ jobs:
   #       uses: actions/checkout@v6
 
   #     - name: Download source distribution
-  #       uses: actions/download-artifact@v7
+  #       uses: actions/download-artifact@v8
   #       with:
   #         name: ${{ inputs.artifact-name }}
   #         path: dist
