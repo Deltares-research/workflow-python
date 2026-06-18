@@ -27,7 +27,7 @@ maintainers = [
 
 description = ""
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 
 requires-python = ">=3.11"
 dependencies = [
@@ -105,8 +105,8 @@ test = [
 workflowpy = "workflowpy.cli.main:cli"
 
 [project.urls]
-"Source" =  "https://github.com/deltares-research/workflowpy"
-"Bug Reports" = "https://github.com/deltares-research/workflowpy/issues"
+"Source" =  "https://github.com/deltares-research/workflow-python"
+"Bug Reports" = "https://github.com/deltares-research/workflow-python/issues"
 
 ## Some stuff for pytest and coverage
 [tool.pytest.ini_options]

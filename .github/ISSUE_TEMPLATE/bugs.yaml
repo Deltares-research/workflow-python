@@ -1,5 +1,5 @@
 name: Bugs
-description: Broken elements within workflowpy
+description: Broken elements within workflow-python
 # title: "BUG: "
 labels: [bug]
 
@@ -7,13 +7,13 @@ body:
   - type: checkboxes
     id: checks
     attributes:
-      label: workflowpy version checks
+      label: workflow-python version checks
       options:
         - label: >
             I have checked that this issue has not already been reported.
           required: true
         - label: >
-            I have checked that this bug exists on the latest version of workflowpy.
+            I have checked that this bug exists on the latest version of workflow-python.
           required: true
   - type: textarea
     id: example
