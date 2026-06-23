@@ -6,9 +6,9 @@ from workflowpy.method import Method
 
 
 def test_method_eps():
-    name = "test_method"
-    cls_name = "TestMethod"
-    module = "helper"
+    name = "_dummy_run"
+    cls_name = "DummyRun"
+    module = "workflowpy.methods._dummy.run"
     ep_str = f"{module}:{cls_name}"
 
     m = MethodEPS({name: ep_str})
@@ -28,7 +28,7 @@ def test_method_eps():
     with pytest.raises(ValueError, match="Invalid entry point 123"):
         m.set_ep("test_invalid", 123)
     # raise ValueError if method already exists
-    with pytest.raises(ValueError, match="Duplicate entry point test_method"):
+    with pytest.raises(ValueError, match="Duplicate entry point _dummy_run"):
         m.set_ep(name, ep_str)
     # raise ValueError if method not found
     with pytest.raises(ValueError, match="Method not_a_method not found"):

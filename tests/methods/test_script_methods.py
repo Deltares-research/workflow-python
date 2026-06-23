@@ -6,10 +6,10 @@ import pytest
 from pydantic import ValidationError
 
 from workflowpy.methods.script import (
-    ScriptInput,
+    Input,
+    Output,
+    Params,
     ScriptMethod,
-    ScriptOutput,
-    ScriptParams,
 )
 from workflowpy.workflow import Workflow
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
 def test_script_params():
     # test params
-    params = ScriptParams(script=Path("script.py"), param1="value1", param2=2)
+    params = Params(script=Path("script.py"), param1="value1", param2=2)
     assert params.script == Path("script.py")
     assert params.param1 == "value1"
     assert params.param2 == 2
@@ -47,32 +47,32 @@ def test_script_params():
 
 def test_script_output():
     # test output with various options
-    output = ScriptOutput(test="output.txt")
+    output = Output(test="output.txt")
     assert output.test == Path("output.txt")  # test if converted to Path
-    output = ScriptOutput.model_validate(Path("output.txt"))
+    output = Output.model_validate(Path("output.txt"))
     assert output.output1 == Path("output.txt")
-    output = ScriptOutput.model_validate([Path("output1.txt"), Path("output2.txt")])
+    output = Output.model_validate([Path("output1.txt"), Path("output2.txt")])
     assert output.output1 == Path("output1.txt")
     assert output.output2 == Path("output2.txt")
-    output = ScriptOutput.model_validate(
+    output = Output.model_validate(
         {"foo": Path("output1.txt"), "bar": Path("output2.txt")}
     )
     assert output.foo == Path("output1.txt")
     assert output.bar == Path("output2.txt")
     # test invalid output
     with pytest.raises(ValidationError):
-        output = ScriptOutput(test=2)
+        output = Output(test=2)
 
 
 def test_script_input():
-    input = ScriptInput.model_validate("input.txt")
+    input = Input.model_validate("input.txt")
     assert input.input1 == Path("input.txt")
     assert input.script is None
-    input = ScriptInput(script="script.py")
+    input = Input(script="script.py")
     assert input.script == Path("script.py")
-    ScriptInput.model_validate({})  # test empty input
+    Input.model_validate({})  # test empty input
     with pytest.raises(ValidationError):
-        input = ScriptInput(script="script.py", foo=2)
+        input = Input(script="script.py", foo=2)
 
 
 def test_script_method_run(tmp_path: Path):

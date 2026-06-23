@@ -10,8 +10,12 @@ if TYPE_CHECKING:
 __all__ = ["METHODS"]
 
 __eps__ = {
+    "_dummy_combine": "workflowpy.methods._dummy:DummyCombine",
+    "_dummy_postprocess": "workflowpy.methods._dummy:DummyPostprocess",
+    "_dummy_prepare": "workflowpy.methods._dummy:DummyPrepare",
+    "_dummy_run": "workflowpy.methods._dummy:DummyRun",
     "script_method": "workflowpy.methods.script:ScriptMethod",
-}  # Register our single built-in method
+}  # Register our single built-in method and our dummy methods
 
 
 class MethodEPS:
