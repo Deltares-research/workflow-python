@@ -5,59 +5,14 @@ import subprocess
 from pathlib import Path
 from typing import Any, ClassVar, Dict, Optional
 
-from pydantic import ConfigDict, model_validator
-
 from workflowpy.method import Method
-from workflowpy.parameters import Parameters
+from workflowpy.methods.params import ExtraFileParameters, ParamsFromDict
 
-__all__ = ["ScriptMethod", "ScriptInput", "ScriptOutput", "ScriptParams"]
-
-
-class ScriptParams(Parameters):
-    """Parameters for ScriptMethod class."""
-
-    _type: ClassVar[str] = "param"
-
-    # Allow extra fields in the model
-    model_config = ConfigDict(extra="allow")
-
-    @model_validator(mode="before")
-    @classmethod
-    def _input_to_dict(cls, data: Any) -> Any:
-        """Convert the input field to a dictionary."""
-        # check if json and convert to dict
-        if isinstance(data, str) and data.startswith("{") and data.endswith("}"):
-            # replace single quotes with double quotes
-            data = json.loads(data.replace("'", '"'))
-        # check if single path and convert to dict
-        elif isinstance(data, (Path, str)):
-            data = {f"{cls._type}1": data}
-        # check if list and convert to dict
-        elif isinstance(data, list):
-            data = {f"{cls._type}{i + 1}": item for i, item in enumerate(data)}
-        return data
+__all__ = ["ScriptMethod"]
 
 
-class ScriptOutput(ScriptParams):
+class Input(ParamsFromDict, ExtraFileParameters):
     """Input parameters for ScriptMethod class."""
-
-    _type: ClassVar[str] = "output"
-
-    @model_validator(mode="after")
-    def check_extra_fields_are_paths(self):
-        """Check that all extra fields are Path types."""
-        for key, value in self:
-            if value is None:
-                continue  # skip None values such as initial script
-            try:
-                setattr(self, key, Path(value))
-            except Exception:
-                raise ValueError(f"{key} not a Path type ({type(value)})")
-        return self
-
-
-class ScriptInput(ScriptOutput):
-    """Output parameters for ScriptMethod class."""
 
     _type: ClassVar[str] = "input"
 
@@ -65,6 +20,18 @@ class ScriptInput(ScriptOutput):
     # parse json input and add the script field later
     script: Optional[Path] = None
     """Path to the script file."""
+
+
+class Params(ParamsFromDict):
+    """Parameters for ScriptMethod class."""
+
+    _type: ClassVar[str] = "params"
+
+
+class Output(ParamsFromDict, ExtraFileParameters):
+    """Output parameters for ScriptMethod class."""
+
+    _type: ClassVar[str] = "output"
 
 
 class ScriptMethod(Method):
@@ -102,10 +69,10 @@ class ScriptMethod(Method):
         params = {} if params is None else params
         # use model_validate on input first to
         # parse json input, then set script field
-        self.input: ScriptInput = ScriptInput.model_validate(input)
+        self.input: Input = Input.model_validate(input)
         self.input.script = Path(script)
-        self.output: ScriptOutput = ScriptOutput.model_validate(output)
-        self.params: ScriptParams = ScriptParams.model_validate(params)
+        self.output: Output = Output.model_validate(output)
+        self.params: Params = Params.model_validate(params)
 
     def _run(self):
         """Run the python script."""
