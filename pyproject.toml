@@ -15,7 +15,7 @@ version = {attr = "workflowpy.version.__version__"}
 
 ## Project related stuff
 [project]
-name = "workflowpy"
+name = "workflow-python"
 dynamic = ['version']
 
 authors = [
@@ -278,7 +278,7 @@ pip = "*"
 uv = "*"
 
 [tool.pixi.pypi-dependencies]
-workflowpy = { path = ".", editable = true }
+workflow-python = { path = ".", editable = true }
 
 [tool.pixi.feature.examples.dependencies]
 pandoc = "*"
