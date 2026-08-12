@@ -26,6 +26,7 @@ from workflowpy.rule import Rule
 from workflowpy.rules import Rules
 from workflowpy.templates import TEMPLATE_DIR
 from workflowpy.templates.jinja_cwl_rule import JinjaCWLRule, JinjaCWLWorkflow
+from workflowpy.templates.jinja_make_rule import JinjaMakeRule
 from workflowpy.templates.jinja_snake_rule import JinjaSnakeRule
 from workflowpy.wildcards import Wildcards
 
@@ -193,6 +194,39 @@ class Workflow:
         )
         with open(config_path, "w") as f:
             yaml.dump(config_dict, f)
+
+    def to_makefile(
+        self,
+        makefile: str = "Makefile",
+        dryrun: bool = False,
+    ) -> None:
+        """Save the workflow to a Makefile.
+
+        Parameters
+        ----------
+        makefile : str
+            The Makefile filename, by default "Makefile".
+        dryrun : bool, optional
+            Run the workflow in dryrun mode, by default False.
+        """
+        make_path = Path(self.root, makefile).resolve()
+        template_env = Environment(
+            loader=PackageLoader("workflowpy"),
+            trim_blocks=True,
+            lstrip_blocks=True,
+        )
+        template = template_env.get_template("workflow.mk.jinja")
+        make_rules = [JinjaMakeRule(r) for r in self.rules]
+        config_dict = self.config.to_dict(mode="json", posix_path=True)
+        _str = template.render(
+            version=__version__,
+            config=config_dict,
+            rules=make_rules,
+            wildcards=self.wildcards.wildcards,
+            dryrun=dryrun,
+        )
+        with open(make_path, "w") as f:
+            f.write(_str)
 
     def to_cwl(
         self,

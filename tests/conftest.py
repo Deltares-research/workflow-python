@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -15,7 +16,7 @@ def test_data_dir() -> Path:
     return Path(__file__).parent / "_data"
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def has_snakemake() -> bool:
     """Return True if snakemake is installed."""
     try:
@@ -23,6 +24,14 @@ def has_snakemake() -> bool:
         return True
     except Exception:
         return False
+
+
+@pytest.fixture(scope="session")
+def make_binary() -> str:
+    """Return the path to the make binary, or None if not found."""
+    # Check for the make binary, searching for mingw32-make on Windows
+    binary = shutil.which("make") or shutil.which("mingw32-make")
+    return binary
 
 
 # Functions and classes used in testing
