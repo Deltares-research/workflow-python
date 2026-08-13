@@ -1,0 +1,54 @@
+{% macro add_rule(rule, dryrun) %}
+# Rule: {{ rule.rule_id }} ({{ rule.method_name }})
+{% if rule.has_multiple_repeat_wildcards %}
+define {{ rule.rule_id }}_template
+{{ rule.make_targets | join(' ') }}{% if rule.make_targets | length > 1 %} &{% endif %}: {{ rule.make_prereqs | join(' ') }}{% if rule.prereqs_foreach_expr %} {{ rule.prereqs_foreach_expr }}{% endif %}
+
+	workflowpy method {{ rule.method_name }} \
+{% for key, value in rule.shell_kwargs_formatted().items() %}
+	  {{ key }}="{{ value }}"{% if not loop.last %} \{% endif %}
+
+{% endfor %}
+{% if dryrun %}
+	  --dryrun
+{% endif %}
+endef
+{% for wc in rule.foreach_wildcards %}
+$(foreach {{ wc.name }},$({{ wc.var }}),\
+{% endfor %}
+$(eval $(call {{ rule.rule_id }}_template)){% for wc in rule.foreach_wildcards %}){% endfor %}
+
+{% elif rule.has_expand_wildcards %}
+{{ rule.output_var_name }} := {{ rule.output_foreach_expr }}
+
+$({{ rule.output_var_name }}) &: {{ rule.make_prereqs | join(' ') }}{% if rule.prereqs_foreach_expr %} {{ rule.prereqs_foreach_expr }}{% endif %}
+
+{% if rule.script %}
+	python "{{ rule.script }}"
+{% else %}
+	workflowpy method {{ rule.method_name }} \
+{% for key, value in rule.shell_kwargs_formatted().items() %}
+	  {{ key }}="{{ value }}"{% if not loop.last %} \{% endif %}
+
+{% endfor %}
+{% if dryrun %}
+	  --dryrun
+{% endif %}
+{% endif %}
+{% else %}
+{{ rule.make_targets | join(' ') }}{% if rule.make_targets | length > 1 %} &{% endif %}: {{ rule.make_prereqs | join(' ') }}{% if rule.prereqs_foreach_expr %} {{ rule.prereqs_foreach_expr }}{% endif %}
+
+{% if rule.script %}
+	python "{{ rule.script }}"
+{% else %}
+	workflowpy method {{ rule.method_name }} \
+{% for key, value in rule.shell_kwargs_formatted().items() %}
+	  {{ key }}="{{ value }}"{% if not loop.last %} \{% endif %}
+
+{% endfor %}
+{% if dryrun %}
+	  --dryrun
+{% endif %}
+{% endif %}
+{% endif %}
+{% endmacro %}

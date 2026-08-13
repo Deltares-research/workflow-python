@@ -181,6 +181,29 @@ def validate_cwl_workflow(workflow_file: Path):
     ).check_returncode()
 
 
+def test_workflow_to_makefile(workflow: Workflow, tmp_path, make_binary: str | None):
+    test_file = tmp_path / "test.yml"
+    with open(test_file, "w") as f:
+        yaml.dump({"data": "test"}, f)
+    w = create_workflow_with_mock_methods(
+        workflow, root=tmp_path, input_file=test_file.name
+    )
+    w.to_makefile(makefile="Makefile")
+    assert "Makefile" in os.listdir(tmp_path)
+    # read and check basic content
+    makefile_content = (tmp_path / "Makefile").read_text()
+    assert "workflowpy method" in makefile_content
+    assert "all:" in makefile_content
+    assert "mock_expand_rule" in makefile_content
+    assert "mock_rule" in makefile_content
+    assert "mock_reduce_rule" in makefile_content
+    if make_binary is not None:
+        subprocess.run(
+            [make_binary, "--dry-run"],
+            cwd=tmp_path,
+        )
+
+
 @pytest.mark.skipif(platform.system() == "Windows", reason="Not supported on Windows")
 def test_workflow_to_cwl(w: Workflow, tmp_path):
     test_file = tmp_path / "test.yml"
