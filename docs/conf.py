@@ -64,7 +64,7 @@ autosummary_generate = True
 source_suffix = ".rst"
 templates_path = ["_templates"]
 
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "links.rst"]
 language = "en"
 master_doc = "index"
 pygments_style = "sphinx"
@@ -89,8 +89,8 @@ html_context = {
 }
 
 html_css_files = ["theme.css"]
-# html_favicon = "_static/icon.svg"
-# html_logo = "_static/icon.svg"
+html_favicon = "_static/icon.svg"
+html_logo = "_static/icon.svg"
 html_show_sourcelink = False
 html_static_path = ["_static"]
 html_theme = "pydata_sphinx_theme"
@@ -127,6 +127,11 @@ html_theme_options = {
 }
 
 remove_from_toctrees = ["_generated/*"]
+
+# Add information to the back of every page
+rst_epilog = ""
+with open("links.rst") as f:
+    rst_epilog += f.read()
 
 # -- Options for manual page output ---------------------------------------
 
