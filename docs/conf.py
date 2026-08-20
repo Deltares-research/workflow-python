@@ -82,7 +82,7 @@ doc_version = bare_version[: bare_version.find("dev") - 1]
 html_context = {
     "github_url": "https://github.com",
     "github_user": "deltares-research",
-    "github_repo": "workflowpy",
+    "github_repo": "workflow-python",
     "github_version": "main",  # FIXME
     "doc_path": "docs",
     "default_mode": "auto",
@@ -99,7 +99,7 @@ html_theme_options = {
     "navbar_align": "content",
     "show_nav_level": 1,
     "logo": {
-        "text": "workflowpy",
+        "text": "workflow-python",
     },
     "navbar_start": ["navbar-logo"],
     "header_links_before_dropdown": 6,
@@ -108,13 +108,13 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/deltares-research/workflowpy",  # required
+            "url": "https://github.com/deltares-research/workflow-python",  # required
             "icon": "fab fa-github",  # Font Awesome GitHub icon
             "type": "fontawesome",
         },
     ],
     "switcher": {
-        "json_url": "https://raw.githubusercontent.com/deltares-research/workflowpy/gh-pages/switcher.json",
+        "json_url": "https://raw.githubusercontent.com/deltares-research/workflow-python/gh-pages/switcher.json",
         "version_match": doc_version,
     },
     "navbar_end": [

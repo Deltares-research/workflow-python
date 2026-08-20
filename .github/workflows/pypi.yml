@@ -55,7 +55,7 @@ jobs:
     if: github.event_name == 'push'
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/workflowpy
+      url: https://test.pypi.org/p/workflow-python
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/workflowpy
+      url: https://pypi.org/p/workflow-python
     permissions:
       id-token: write
 
